@@ -49,7 +49,15 @@ body {
 
 #coatColor {
     z-index: 2;
+    position: absolute;
+    top: 30px;      /* Ajusta este valor para subir/bajar el chubasquero */
+    left: 0;         /* Mantener centrado horizontal */
+    right: 0;
+    margin: 0 auto;  /* Centrar horizontalmente */
+    max-width: 300px;
+    transition: all 0.4s ease;
 }
+
 
 #coatPattern {
     z-index: 3;
@@ -123,7 +131,6 @@ body {
     <div class="fish-preview">
         <img id="fish" src="pez_base.png" alt="Pez base">
         <img id="coatColor" src="chubasqueros/red.png" alt="Chubasquero color">
-        <img id="coatPattern" src="" alt="Chubasquero patrón">
     </div>
 
     <!-- Controles -->
@@ -139,15 +146,6 @@ body {
     <button style="background:purple" onclick="setColor('purple')"></button>
 </div>
 
-
-        <h3>Patrón</h3>
-        <div class="patterns">
-            <button style="background-image:url('patterns/dots.png'); background-size:cover;" onclick="setPattern('dots')"></button>
-            <button style="background-image:url('patterns/stripes.png'); background-size:cover;" onclick="setPattern('stripes')"></button>
-            <button style="background-image:url('patterns/stars.png'); background-size:cover;" onclick="setPattern('stars')"></button>
-            <button style="background-image:url('patterns/waves.png'); background-size:cover;" onclick="setPattern('waves')"></button>
-            <button style="background-image:url('patterns/flowers.png'); background-size:cover;" onclick="setPattern('flowers')"></button>
-        </div>
 
         <h3>Talla</h3>
         <div class="sizes">
