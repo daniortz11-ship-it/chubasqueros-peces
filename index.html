@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseña tu Chubasquero Avanzado</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #a0e0ff, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.designer-slide {
+    display: flex;
+    max-width: 1100px;
+    width: 100%;
+    background: #ffffffdd;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.fish-preview {
+    flex: 2;
+    background: #c0f0ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+}
+
+#fish, #coatColor, #coatPattern {
+    position: absolute;
+    max-width: 300px;
+    transition: all 0.4s ease;
+}
+
+#fish {
+    z-index: 1;
+    animation: swim 3s ease-in-out infinite alternate;
+}
+
+#coatColor {
+    z-index: 2;
+}
+
+#coatPattern {
+    z-index: 3;
+}
+
+@keyframes swim {
+    0% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(-2deg); }
+}
+
+.controls {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.controls h3 {
+    margin: 5px 0;
+}
+
+.colors, .patterns, .sizes {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.colors button, .patterns button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.colors button:hover, .patterns button:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.sizes select {
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+#saveBtn {
+    padding: 10px 20px;
+    background: #00aaff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+#saveBtn:hover {
+    background: #0088cc;
+}
+</style>
+</head>
+<body>
+
+<div class="designer-slide">
+
+    <!-- Vista previa del pez -->
+    <div class="fish-preview">
+        <img id="fish" src="pez_base.png" alt="Pez base">
+        <img id="coatColor" src="chubasqueros/red.png" alt="Chubasquero color">
+        <img id="coatPattern" src="" alt="Chubasquero patrón">
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <h3>Color</h3>
+        <div class="colors">
+            <button style="background:#ff0000" onclick="setColor('red')"></button>
+            <button style="background:#0000ff" onclick="setColor('blue')"></button>
+            <button style="background:#00ff00" onclick="setColor('green')"></button>
+            <button style="background:#ffff00" onclick="setColor('yellow')"></button>
+            <button style="background:#ff00ff" onclick="setColor('pink')"></button>
+            <button style="background:#ffa500" onclick="setColor('orange')"></button>
+            <button style="background:#800080" onclick="setColor('purple')"></button>
+        </div>
+
+        <h3>Patrón</h3>
+        <div class="patterns">
+            <button style="background-image:url('patterns/dots.png'); background-size:cover;" onclick="setPattern('dots')"></button>
+            <button style="background-image:url('patterns/stripes.png'); background-size:cover;" onclick="setPattern('stripes')"></button>
+            <button style="background-image:url('patterns/stars.png'); background-size:cover;" onclick="setPattern('stars')"></button>
+            <button style="background-image:url('patterns/waves.png'); background-size:cover;" onclick="setPattern('waves')"></button>
+            <button style="background-image:url('patterns/flowers.png'); background-size:cover;" onclick="setPattern('flowers')"></button>
+        </div>
+
+        <h3>Talla</h3>
+        <div class="sizes">
+            <select id="size" onchange="setSize(this.value)">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+        </div>
+
+        <button id="saveBtn">Guardar diseño</button>
+    </div>
+</div>
+
+<!-- Librería para exportar como imagen -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+let currentColor = 'red';
+let currentPattern = '';
+let currentSize = 'S';
+
+function setColor(color){
+    currentColor = color;
+    document.getElementById('coatColor').src = `chubasqueros/${color}.png`;
+}
+
+function setPattern(pattern){
+    currentPattern = pattern;
+    const coatPattern = document.getElementById('coatPattern');
+    coatPattern.src = pattern ? `patterns/${pattern}.png` : '';
+}
+
+function setSize(size){
+    currentSize = size;
+    const coatColor = document.getElementById('coatColor');
+    // Simula ajuste de tamaño
+    let scale = 1;
+    if(size === 'S') scale = 0.9;
+    if(size === 'M') scale = 1;
+    if(size === 'L') scale = 1.1;
+    if(size === 'XL') scale = 1.2;
+    coatColor.style.transform = `scale(${scale})`;
+    document.getElementById('coatPattern').style.transform = `scale(${scale})`;
+}
+
+// Guardar diseño como imagen
+document.getElementById('saveBtn').onclick = () => {
+    html2canvas(document.querySelector('.fish-preview')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'diseño_pez.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+};
+</script>
+
+</body>
+</html>
