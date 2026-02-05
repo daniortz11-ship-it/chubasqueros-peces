@@ -25,42 +25,31 @@ body {
     overflow: hidden;
 }
 
+/* Vista previa: pez y chubasquero lado a lado */
 .fish-preview {
     flex: 2;
     background: #c0f0ff;
     display: flex;
-    justify-content: center;
+    justify-content: space-around; /* paralelos */
     align-items: center;
     position: relative;
     padding: 50px;
-    overflow: hidden;
 }
 
-#fish, #coatColor, #coatPattern {
-    position: absolute;
+.fish-preview img {
     max-width: 300px;
     transition: all 0.4s ease;
 }
 
+/* Ajuste de chubasquero */
+#coatColor {
+    z-index: 2;
+}
+
+/* Animación del pez */
 #fish {
     z-index: 1;
     animation: swim 3s ease-in-out infinite alternate;
-}
-
-#coatColor {
-    z-index: 2;
-    position: absolute;
-    top: 20px;      /* Ajusta este valor para subir/bajar el chubasquero */
-    left: 0;         /* Mantener centrado horizontal */
-    right: 0;
-    margin: 0 auto;  /* Centrar horizontalmente */
-    max-width: 300px;
-    transition: all 0.4s ease;
-}
-
-
-#coatPattern {
-    z-index: 3;
 }
 
 @keyframes swim {
@@ -81,13 +70,13 @@ body {
     margin: 5px 0;
 }
 
-.colors, .patterns, .sizes {
+.colors, .sizes {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
 }
 
-.colors button, .patterns button {
+.colors button {
     width: 40px;
     height: 40px;
     border: none;
@@ -96,7 +85,7 @@ body {
     transition: transform 0.2s;
 }
 
-.colors button:hover, .patterns button:hover {
+.colors button:hover {
     transform: scale(1.2);
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
@@ -127,24 +116,24 @@ body {
 
 <div class="designer-slide">
 
-    <!-- Vista previa del pez -->
+    <!-- Vista previa del pez y chubasquero paralelos -->
     <div class="fish-preview">
         <img id="fish" src="pez_base.png" alt="Pez base">
-        <img id="coatColor" src="chubasqueros/red.png" alt="Chubasquero color">
+        <img id="coatColor" src="chubasqueros/red.png" alt="Chubasquero">
     </div>
 
     <!-- Controles -->
     <div class="controls">
-        <h3>Color</h3>
+        <h3>Colores</h3>
         <div class="colors">
-    <button style="background:red" onclick="setColor('red')"></button>
-    <button style="background:blue" onclick="setColor('blue')"></button>
-    <button style="background:green" onclick="setColor('green')"></button>
-    <button style="background:yellow" onclick="setColor('yellow')"></button>
-    <button style="background:pink" onclick="setColor('pink')"></button>
-    <button style="background:orange" onclick="setColor('orange')"></button>
-    <button style="background:purple" onclick="setColor('purple')"></button>
-</div>
+            <button style="background:red" onclick="setDesign('red')"></button>
+            <button style="background:blue" onclick="setDesign('blue')"></button>
+            <button style="background:green" onclick="setDesign('green')"></button>
+            <button style="background:yellow" onclick="setDesign('yellow')"></button>
+            <button style="background:pink" onclick="setDesign('pink')"></button>
+            <button style="background:orange" onclick="setDesign('orange')"></button>
+            <button style="background:purple" onclick="setDesign('purple')"></button>
+        </div>
 
         <h3>Talla</h3>
         <div class="sizes">
@@ -165,35 +154,23 @@ body {
 
 <script>
 let currentColor = 'red';
-let currentPattern = '';
 let currentSize = 'S';
 
-function setColor(color){
-    document.getElementById('coatColor').src = `chubasqueros/${color}.png`;
+// Cambia el chubasquero según el color o diseño
+function setDesign(name){
+    document.getElementById('coatColor').src = `chubasqueros/${name}.png`;
 }
 
-
-
-    
-}
-
-function setPattern(pattern){
-    currentPattern = pattern;
-    const coatPattern = document.getElementById('coatPattern');
-    coatPattern.src = pattern ? `patterns/${pattern}.png` : '';
-}
-
+// Cambia tamaño del chubasquero
 function setSize(size){
     currentSize = size;
     const coatColor = document.getElementById('coatColor');
-    // Simula ajuste de tamaño
     let scale = 1;
     if(size === 'S') scale = 0.9;
     if(size === 'M') scale = 1;
     if(size === 'L') scale = 1.1;
     if(size === 'XL') scale = 1.2;
     coatColor.style.transform = `scale(${scale})`;
-    document.getElementById('coatPattern').style.transform = `scale(${scale})`;
 }
 
 // Guardar diseño como imagen
@@ -206,6 +183,9 @@ document.getElementById('saveBtn').onclick = () => {
     });
 };
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
