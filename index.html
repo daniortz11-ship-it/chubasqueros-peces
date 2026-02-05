@@ -171,9 +171,10 @@ let currentPattern = '';
 let currentSize = 'S';
 
 function setColor(color){
-    const coat = document.getElementById('coatColor');
-    coat.style.filter = `hue-rotate(${color}deg)`;
+    document.getElementById('coatColor').src = `chubasqueros/${color}.png`;
 }
+
+
 
     
 }
