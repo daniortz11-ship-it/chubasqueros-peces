@@ -57,48 +57,61 @@ body {
     padding: 30px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
 }
 
 .controls h3 {
-    margin: 5px 0;
+    margin-bottom: 10px;
+    font-size: 18px;
 }
 
-.colors, .sizes {
+.colors,
+.designs {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
-.colors button {
+.colors button,
+.designs button {
     width: 40px;
     height: 40px;
-    border: none;
     border-radius: 8px;
+    border: none;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
-.colors button:hover {
-    transform: scale(1.2);
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+.designs button {
+    width: auto;
+    padding: 6px 10px;
+    background: #eee;
+    font-size: 14px;
 }
 
-.sizes select {
-    padding: 5px 10px;
+.designs button:hover {
+    background: #00aaff;
+    color: white;
+}
+
+.size-save {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+select {
+    padding: 6px 10px;
     font-size: 16px;
 }
 
 #saveBtn {
-    padding: 10px 20px;
+    padding: 10px 18px;
     background: #00aaff;
     color: white;
     border: none;
     border-radius: 10px;
-    cursor: pointer;
     font-weight: bold;
-    margin-top: 10px;
-    transition: background 0.3s;
+    cursor: pointer;
 }
 
 #saveBtn:hover {
@@ -131,30 +144,47 @@ body {
             <!-- Diseños especiales -->
             <h3>Diseños especiales</h3>
 
-<div class="colors">
+<div class="controls">
 
-    <button onclick="setDesign('diseño1')">Diseño 1</button>
-    <button onclick="setDesign('diseño2')">Diseño 2</button>
-    <button onclick="setDesign('diseño3')">Diseño 3</button>
-    <button onclick="setDesign('diseño4')">Diseño 4</button>
-    <button onclick="setDesign('diseño5')">Diseño 5</button>
+    <div>
+        <h3>Colores</h3>
+        <div class="colors">
+            <button style="background:red" onclick="setColor('red')"></button>
+            <button style="background:blue" onclick="setColor('blue')"></button>
+            <button style="background:green" onclick="setColor('green')"></button>
+            <button style="background:yellow" onclick="setColor('yellow')"></button>
+            <button style="background:pink" onclick="setColor('pink')"></button>
+            <button style="background:orange" onclick="setColor('orange')"></button>
+        </div>
+    </div>
 
-</div>
+    <div>
+        <h3>Diseños especiales</h3>
+        <div class="designs">
+            <button onclick="setDesign('diseño1')">Diseño 1</button>
+            <button onclick="setDesign('diseño2')">Diseño 2</button>
+            <button onclick="setDesign('diseño3')">Diseño 3</button>
+            <button onclick="setDesign('diseño4')">Diseño 4</button>
+            <button onclick="setDesign('diseño5')">Diseño 5</button>
+        </div>
+    </div>
 
-
-        <h3>Talla</h3>
-        <div class="sizes">
-            <select id="size" onchange="setSize(this.value)">
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
+    <div class="size-save">
+        <div>
+            <h3>Talla</h3>
+            <select onchange="setSize(this.value)">
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
             </select>
         </div>
 
         <button id="saveBtn">Guardar diseño</button>
     </div>
+
 </div>
+
 
 <!-- Librería para exportar como imagen -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
